@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.Zomato_App</groupId>
-	<artifactId>Zomato_App</artifactId>
+	<artifactId>zomato-service-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Zomato_App</name>
 	<description>Demo project for Spring Boot</description>

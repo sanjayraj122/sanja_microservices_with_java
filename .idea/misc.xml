@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/Auth-service/pom.xml" />
         <option value="$PROJECT_DIR$/restaurant-service/pom.xml" />
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/zomato-service-app/pom.xml" />
       </list>
     </option>
   </component>
