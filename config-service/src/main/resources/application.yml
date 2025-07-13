@@ -8,9 +8,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/sanjayraj122/sanja_microservices_with_java.git
+          uri: https://github.com/sanjayraj122/sanja-microservices-config
           clone-on-start: true
-          default-label: main
 #          username: your-username # optional, if private repo
 #          password: your-password # optional, if private repo
 
