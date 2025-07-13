@@ -5,6 +5,12 @@ spring:
     name: zomato-gateway
   config:
     import: optional:configserver:http://localhost:8888
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enabled: true
+      hystrix:
+        enabled: false
 #  cloud:
 #    gateway:
 #      routes:
@@ -27,10 +33,83 @@ spring:
 #          predicates:
 #            - Path=/auth/**
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# Circuit Breaker Configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      auth-service:
+        register-health-indicator: true
+        sliding-window-size: 10
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 20s
+        failure-rate-threshold: 60
+        slow-call-rate-threshold: 60
+        slow-call-duration-threshold: 1000ms
+        automatic-transition-from-open-to-half-open-enabled: true
+      restaurant-service:
+        register-health-indicator: true
+        sliding-window-size: 15
+        permitted-number-of-calls-in-half-open-state: 4
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 25s
+        failure-rate-threshold: 55
+        slow-call-rate-threshold: 55
+        slow-call-duration-threshold: 1500ms
+        automatic-transition-from-open-to-half-open-enabled: true
+      zomato-service:
+        register-health-indicator: true
+        sliding-window-size: 25
+        permitted-number-of-calls-in-half-open-state: 6
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 35s
+        failure-rate-threshold: 45
+        slow-call-rate-threshold: 45
+        slow-call-duration-threshold: 3000ms
+        automatic-transition-from-open-to-half-open-enabled: true
+  timelimiter:
+    instances:
+      auth-service:
+        timeout-duration: 2s
+        cancel-running-future: true
+      restaurant-service:
+        timeout-duration: 2500ms
+        cancel-running-future: true
+      zomato-service:
+        timeout-duration: 4s
+        cancel-running-future: true
+
+# Actuator Configuration for Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+# Logging Configuration
+logging:
+  level:
+    com.Api_Gateway.Gateway: DEBUG
+    io.github.resilience4j: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.circuitbreaker: DEBUG
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  file:
+    name: logs/api-gateway.log
 
 #  security:
 jwt:
