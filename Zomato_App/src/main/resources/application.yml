@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: Zomato-App-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/zomato_app
+    username: root
+    password: Sa@14253669
+  jpa:
+    hibernate:
+      ddl-auto: update
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka/

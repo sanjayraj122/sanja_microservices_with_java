@@ -1,0 +1,36 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: zomato-gateway
+
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: zomato-app-service
+#          uri: lb://ZOMATO-APP-SERVICE
+#          predicates:
+#            - Path=/zomato/orders/**
+#          filters:
+#            - AuthenticationFilter
+#
+#        - id: restaurant-service
+#          uri: lb://RESTAURANT-SERVICE
+#          predicates:
+#            - Path=/orders/**
+#          filters:
+#            - AuthenticationFilter
+#
+#        - id: auth-service
+#          uri: lb://AUTH-SERVICE
+#          predicates:
+#            - Path=/auth/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+#  security:
+jwt:
+  secret: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
